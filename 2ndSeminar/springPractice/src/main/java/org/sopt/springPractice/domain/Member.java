@@ -34,7 +34,8 @@ public class Member {
     }
 
     public static Member create(String name, Part part, int age) {
-        return Member.builder().name(name)
+        return Member.builder()
+                .name(name)
                 .part(part)
                 .age(age)
                 .build();
