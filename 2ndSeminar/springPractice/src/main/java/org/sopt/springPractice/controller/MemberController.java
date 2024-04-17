@@ -5,6 +5,7 @@ import lombok.RequiredArgsConstructor;
 import org.sopt.springPractice.service.MemberService;
 import org.sopt.springPractice.service.dto.MemberCreateDTO;
 import org.sopt.springPractice.service.dto.MemberFindDTO;
+import org.sopt.springPractice.service.dto.MemberListDTO;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.DeleteMapping;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -42,5 +43,10 @@ public class MemberController {
         memberService.deleteMemberById(memberId);
 
         return ResponseEntity.noContent().build();
+    }
+
+    @GetMapping("/list")
+    public ResponseEntity<MemberListDTO> getMemberList() {
+        return ResponseEntity.ok(memberService.getMemberList());
     }
 }
