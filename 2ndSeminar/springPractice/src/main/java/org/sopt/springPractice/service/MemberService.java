@@ -42,7 +42,7 @@ public class MemberService {
         memberRepository.delete(member);
     }
 
-    public MemberListDTO getMemberList() {
+    public MemberListDTO findMemberList() {
         return MemberListDTO.create(memberRepository.findAll());
     }
 }

@@ -17,27 +17,27 @@ import org.springframework.web.bind.annotation.RestController;
 
 @RestController
 @RequiredArgsConstructor
-@RequestMapping("/api/v1/member")
+@RequestMapping("/api/v1")
 public class MemberController {
 
     private final MemberService memberService;
 
-    @PostMapping
-    public ResponseEntity createMember(
+    @PostMapping("/member")
+    public ResponseEntity<Void> createMember(
             @RequestBody MemberCreateDTO memberCreateDTO
     ) {
         return ResponseEntity.created(URI.create(memberService.createMember(memberCreateDTO))).build();
     }
 
-    @GetMapping("/{memberId}")
+    @GetMapping("/member/{memberId}")
     public ResponseEntity<MemberFindDTO> findMemberById(
             @PathVariable Long memberId
     ) {
         return ResponseEntity.ok(memberService.findMemberById(memberId));
     }
 
-    @DeleteMapping("/{memberId}")
-    public ResponseEntity deleteMemberById(
+    @DeleteMapping("/member/{memberId}")
+    public ResponseEntity<Void> deleteMemberById(
             @PathVariable Long memberId
     ) {
         memberService.deleteMemberById(memberId);
@@ -45,8 +45,8 @@ public class MemberController {
         return ResponseEntity.noContent().build();
     }
 
-    @GetMapping("/list")
+    @GetMapping("/members")
     public ResponseEntity<MemberListDTO> getMemberList() {
-        return ResponseEntity.ok(memberService.getMemberList());
+        return ResponseEntity.ok(memberService.findMemberList());
     }
 }
