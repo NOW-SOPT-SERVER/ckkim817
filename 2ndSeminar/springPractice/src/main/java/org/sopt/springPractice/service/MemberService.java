@@ -6,6 +6,7 @@ import org.sopt.springPractice.domain.Member;
 import org.sopt.springPractice.repository.MemberRepository;
 import org.sopt.springPractice.service.dto.MemberCreateDTO;
 import org.sopt.springPractice.service.dto.MemberFindDTO;
+import org.sopt.springPractice.service.dto.MemberListDTO;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -39,5 +40,9 @@ public class MemberService {
         Member member = memberRepository.findById(memberId)
                 .orElseThrow(() -> new EntityNotFoundException("ID에 해당하는 사용자가 존재하지 않습니다."));
         memberRepository.delete(member);
+    }
+
+    public MemberListDTO findMemberList() {
+        return MemberListDTO.create(memberRepository.findAll());
     }
 }
