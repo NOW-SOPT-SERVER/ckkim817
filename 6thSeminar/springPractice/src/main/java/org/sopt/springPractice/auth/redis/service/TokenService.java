@@ -1,7 +1,6 @@
 package org.sopt.springPractice.auth.redis.service;
 
 import lombok.RequiredArgsConstructor;
-import lombok.extern.slf4j.Slf4j;
 import org.sopt.springPractice.auth.redis.domain.Token;
 import org.sopt.springPractice.auth.redis.repository.RedisTokenRepository;
 import org.sopt.springPractice.auth.redis.service.dto.AccessTokenDTO;
@@ -14,7 +13,6 @@ import org.springframework.transaction.annotation.Transactional;
 
 @Service
 @RequiredArgsConstructor
-@Slf4j
 public class TokenService {
 
     private final RedisTokenRepository redisTokenRepository;
@@ -22,9 +20,6 @@ public class TokenService {
 
     @Transactional
     public AccessTokenDTO reissueAccessToken(Long userId) {
-
-        log.warn("{}", userId);
-
         Token token = redisTokenRepository.findById(userId).orElseThrow(
                 () -> new UnauthorizedException(ErrorMessage.REFRESH_TOKEN_NOT_FOUND)
         );
