@@ -12,6 +12,7 @@ import java.util.Base64;
 import java.util.Date;
 import javax.crypto.SecretKey;
 import lombok.RequiredArgsConstructor;
+import org.sopt.springPractice.auth.UserAuthentication;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Component;
@@ -22,8 +23,8 @@ public class JwtTokenProvider {
 
     private static final String USER_ID = "userId";
 
-    private static final Long ACCESS_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L * 14;
-    private static final Long REFRESH_TOKEN_EXPIRATION_TIME = 60 * 60 * 24 * 1000L * 14;
+    private static final Long ACCESS_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L * 2;
+    private static final Long REFRESH_TOKEN_EXPIRATION_TIME = 24 * 60 * 60 * 1000L * 14;
 
     @Value("${jwt.secret}")
     private String JWT_SECRET;
@@ -82,5 +83,13 @@ public class JwtTokenProvider {
     public Long getUserFromJwt(String token) {
         Claims claims = getBody(token);
         return Long.valueOf(claims.get(USER_ID).toString());
+    }
+
+    public String newAccessToken(String refreshToken) {
+        Claims claims = getBody(refreshToken);
+        Long userId = Long.valueOf(claims.get(USER_ID).toString());
+        Authentication authentication = UserAuthentication.createUserAuthentication(userId);
+
+        return issueAccessToken(authentication);
     }
 }
